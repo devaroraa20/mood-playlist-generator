@@ -1,0 +1,613 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    color: #ffffff;
+    background: #090617;
+    overflow-x: hidden;
+}
+
+/* mood based backgrounds */
+body.happy {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(255, 77, 210, 0.25), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(255, 166, 0, 0.18), transparent 25%),
+        linear-gradient(135deg, #070612, #14091f, #1c1030);
+}
+
+body.chill {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(65, 157, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(0, 255, 200, 0.16), transparent 25%),
+        linear-gradient(135deg, #070612, #071424, #101f3a);
+}
+
+body.sad {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(110, 130, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(180, 180, 255, 0.12), transparent 25%),
+        linear-gradient(135deg, #070612, #101424, #171b30);
+}
+
+body.energetic {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(255, 72, 72, 0.28), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(255, 180, 0, 0.18), transparent 25%),
+        linear-gradient(135deg, #090612, #241010, #361414);
+}
+
+body.focus {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(0, 255, 170, 0.25), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(0, 140, 255, 0.15), transparent 25%),
+        linear-gradient(135deg, #060912, #071c1a, #0b3029);
+}
+
+body.romantic {
+    background:
+        radial-gradient(circle at 70% 20%, rgba(255, 79, 216, 0.32), transparent 30%),
+        radial-gradient(circle at 25% 80%, rgba(255, 80, 120, 0.18), transparent 25%),
+        linear-gradient(135deg, #090612, #22091d, #35112f);
+}
+
+/* auth pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 75% 20%, rgba(255, 77, 210, 0.28), transparent 30%),
+        radial-gradient(circle at 20% 80%, rgba(255, 166, 0, 0.18), transparent 25%),
+        linear-gradient(135deg, #070612, #14091f, #1c1030);
+}
+
+.auth-card {
+    width: 390px;
+    padding: 35px;
+    border-radius: 26px;
+    background: rgba(18, 15, 35, 0.92);
+    border: 1px solid rgba(176, 94, 255, 0.25);
+    box-shadow: 0 25px 80px rgba(255, 79, 216, 0.18);
+    text-align: center;
+    animation: fadeUp 0.9s ease;
+}
+
+.auth-logo {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #25d6ff, #ff4fd8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 0 30px rgba(255, 79, 216, 0.55);
+}
+
+.auth-card h1 {
+    font-size: 32px;
+    font-weight: 900;
+}
+
+.auth-card h1 span {
+    color: #ff4fd8;
+}
+
+.auth-card p {
+    color: #b9afd6;
+    margin: 10px 0 24px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 15px 18px;
+    margin-bottom: 15px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background: #17132b;
+    color: white;
+    font-size: 15px;
+}
+
+.auth-card button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #8d5cff, #ff4fd8);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-card button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(255, 79, 216, 0.35);
+}
+
+.auth-link a {
+    color: #ff4fd8;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.error {
+    background: rgba(255, 80, 100, 0.18);
+    color: #ff9bac;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* main layout */
+.app {
+    display: grid;
+    grid-template-columns: 225px 1fr 290px;
+    gap: 14px;
+    padding: 14px;
+    min-height: 100vh;
+}
+
+.sidebar,
+.main,
+.right-panel {
+    background: rgba(8, 7, 22, 0.72);
+    border: 1px solid rgba(176, 94, 255, 0.18);
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 65px rgba(0, 0, 0, 0.28);
+}
+
+.sidebar {
+    padding: 25px 16px;
+    display: flex;
+    flex-direction: column;
+    animation: slideLeft 0.8s ease;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #25d6ff, #ff4fd8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 24px rgba(255, 79, 216, 0.45);
+}
+
+.logo-box h2 {
+    font-size: 20px;
+}
+
+.logo-box h2 span {
+    color: #9b5cff;
+}
+
+.logo-box p {
+    font-size: 12px;
+    color: #b9afd6;
+    margin-top: 4px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.sidebar nav a,
+.logout {
+    text-decoration: none;
+    color: #b9afd6;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background: linear-gradient(135deg, rgba(255, 79, 216, 0.45), rgba(155, 92, 255, 0.35));
+    color: white;
+}
+
+.logout {
+    margin-top: auto;
+    background: rgba(255, 79, 216, 0.12);
+    color: #ff9deb;
+    text-align: center;
+}
+
+.logout:hover {
+    background: rgba(255, 79, 216, 0.25);
+}
+
+/* main */
+.main {
+    padding: 20px;
+    animation: fadeUp 0.9s ease;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.search-bar {
+    width: 360px;
+    height: 44px;
+    background: rgba(31, 26, 55, 0.85);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+}
+
+.search-bar input::placeholder {
+    color: #8f84ad;
+}
+
+.user-box {
+    color: #d9d3ef;
+    font-weight: 600;
+}
+
+/* hero */
+.hero-card {
+    min-height: 160px;
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at 75% 30%, rgba(255, 79, 216, 0.25), transparent 30%),
+        linear-gradient(135deg, rgba(22, 17, 45, 0.95), rgba(11, 9, 26, 0.95));
+    border: 1px solid rgba(176, 94, 255, 0.13);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.hero-card p {
+    font-weight: 800;
+    color: white;
+}
+
+.hero-card h1 {
+    font-size: 42px;
+    margin: 8px 0;
+    background: linear-gradient(135deg, #ff4fd8, #9b5cff);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+}
+
+.hero-card span {
+    color: #c8bfdf;
+}
+
+.headphone {
+    font-size: 95px;
+    filter: drop-shadow(0 0 30px rgba(255, 79, 216, 0.55));
+    animation: float 3.5s ease-in-out infinite;
+}
+
+/* moods */
+.mood-section {
+    margin-top: 18px;
+}
+
+.mood-section h3 {
+    margin-bottom: 14px;
+}
+
+.mood-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 11px;
+}
+
+.mood-card {
+    height: 110px;
+    border-radius: 14px;
+    border: 1px solid rgba(176, 94, 255, 0.22);
+    background: rgba(28, 22, 54, 0.9);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mood-card b {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.mood-card span {
+    font-weight: 700;
+}
+
+.mood-card:hover,
+.mood-card.selected {
+    transform: translateY(-7px) scale(1.03);
+    background: linear-gradient(135deg, rgba(255, 191, 0, 0.35), rgba(255, 79, 216, 0.28));
+    border-color: #ffcc3d;
+    box-shadow: 0 15px 35px rgba(255, 79, 216, 0.22);
+}
+
+/* playlist */
+.playlist-section {
+    margin-top: 20px;
+}
+
+.section-heading {
+    margin-bottom: 14px;
+}
+
+.song-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.song-card {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    background: rgba(20, 16, 39, 0.88);
+    border: 1px solid rgba(176, 94, 255, 0.12);
+    border-radius: 14px;
+    padding: 10px;
+    overflow: hidden;
+    transition: 0.3s;
+    animation: fadeUp 0.8s ease;
+}
+
+.song-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(255, 79, 216, 0.20);
+}
+
+.song-card img {
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 11px;
+}
+
+.play-circle {
+    position: absolute;
+    right: 14px;
+    top: 104px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4fd8, #7b5cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.song-card h4 {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.song-card p {
+    color: #b9afd6;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* right panel */
+.right-panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: slideRight 0.8s ease;
+}
+
+.now-card,
+.chart-card,
+.quote-card {
+    background: rgba(21, 17, 43, 0.88);
+    border: 1px solid rgba(176, 94, 255, 0.17);
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.now-card h3 {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.now-card img {
+    width: 100%;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.now-card h4 {
+    margin-top: 14px;
+}
+
+.now-card p {
+    color: #b9afd6;
+    margin-top: 5px;
+}
+
+.progress {
+    height: 5px;
+    background: #312a4d;
+    border-radius: 10px;
+    margin: 18px 0;
+}
+
+.progress div {
+    width: 58%;
+    height: 100%;
+    background: linear-gradient(90deg, #7b5cff, #ff4fd8);
+    border-radius: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.controls button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 18px;
+    background: linear-gradient(135deg, #7b5cff, #ff4fd8);
+}
+
+.chart-card {
+    height: 170px;
+}
+
+.quote-card {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.quote-card span {
+    color: #ff4fd8;
+}
+
+/* history */
+.history-title {
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.history-list {
+    display: grid;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.history-card {
+    background: rgba(20, 16, 39, 0.88);
+    border: 1px solid rgba(176, 94, 255, 0.18);
+    border-radius: 18px;
+    padding: 20px;
+    animation: fadeUp 0.8s ease;
+}
+
+.history-card h3 {
+    color: #ff4fd8;
+    margin-bottom: 10px;
+}
+
+/* animations */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-16px);
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(255, 79, 216, 0.08);
+    }
+    50% {
+        box-shadow: 0 0 45px rgba(255, 79, 216, 0.18);
+    }
+}
+
+@media (max-width: 1100px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar,
+    .right-panel {
+        display: none;
+    }
+
+    .mood-grid,
+    .song-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>History | MoodMelody</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="happy">
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="logo-box">
+            <div class="logo">♫</div>
+            <div>
+                <h2>Mood<span>Melody</span></h2>
+                <p>IBM Cloudant History</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/dashboard">⌂ Home</a>
+            <a class="active" href="/history">◷ Mood History</a>
+        </nav>
+
+        <a href="/logout" class="logout">Logout</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <h2 class="history-title">Your Mood History, {{ user }}</h2>
+        </div>
+
+        <section class="history-list">
+            {% for doc in docs %}
+            <div class="history-card">
+                <h3>{{ doc['mood']|capitalize }}</h3>
+                <p><b>Songs:</b> {{ doc['songs'] }}</p>
+                <p><b>Saved At:</b> {{ doc.get('created_at', 'Not available') }}</p>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

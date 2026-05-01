@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register | MoodMelody</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-card">
+    <div class="auth-logo">♫</div>
+    <h1>Create<span>Account</span></h1>
+    <p>Join MoodMelody and save your playlist history</p>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Choose username" required>
+        <input type="password" name="password" placeholder="Choose password" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <p class="auth-link">Already have account? <a href="/">Login</a></p>
+</div>
+
+</body>
+</html>

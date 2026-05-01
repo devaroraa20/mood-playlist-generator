@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MoodMelody Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="{{ mood }}">
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="logo-box">
+            <div class="logo">♫</div>
+            <div>
+                <h2>Mood<span>Melody</span></h2>
+                <p>Mood Playlist Generator</p>
+            </div>
+        </div>
+
+        <nav>
+            <a class="active" href="/dashboard">⌂ Home</a>
+            <a href="/history">◷ Mood History</a>
+        </nav>
+
+        <a href="/logout" class="logout">Logout</a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div class="search-bar">
+                <span>⌕</span>
+                <input placeholder="Search for songs, artists, moods...">
+            </div>
+
+            <div class="user-box">
+                Good Evening, {{ user }} 👋
+            </div>
+        </div>
+
+        <section class="hero-card">
+            <div>
+                <p>Welcome to</p>
+                <h1>Mood Playlist Generator</h1>
+                <span>Choose your mood and let us create the perfect playlist for you.</span>
+            </div>
+
+            <div class="headphone">🎧</div>
+        </section>
+
+        <section class="mood-section">
+            <h3>How are you feeling today?</h3>
+
+            <form method="POST" class="mood-grid">
+                <button name="mood" value="happy" class="mood-card {% if mood=='happy' %}selected{% endif %}">
+                    <b>😀</b><span>Happy</span>
+                </button>
+
+                <button name="mood" value="chill" class="mood-card {% if mood=='chill' %}selected{% endif %}">
+                    <b>😌</b><span>Chill</span>
+                </button>
+
+                <button name="mood" value="sad" class="mood-card {% if mood=='sad' %}selected{% endif %}">
+                    <b>😢</b><span>Sad</span>
+                </button>
+
+                <button name="mood" value="energetic" class="mood-card {% if mood=='energetic' %}selected{% endif %}">
+                    <b>🚀</b><span>Energetic</span>
+                </button>
+
+                <button name="mood" value="focus" class="mood-card {% if mood=='focus' %}selected{% endif %}">
+                    <b>🎯</b><span>Focus</span>
+                </button>
+
+                <button name="mood" value="romantic" class="mood-card {% if mood=='romantic' %}selected{% endif %}">
+                    <b>💗</b><span>Romantic</span>
+                </button>
+            </form>
+        </section>
+
+        <section class="playlist-section">
+            <div class="section-heading">
+                <h3>Your Top Playlist</h3>
+            </div>
+
+            <div class="song-grid">
+                {% for song in songs %}
+                <a href="https://www.youtube.com/watch?v={{ song.yt }}" target="_blank" class="song-card">
+                    <img src="https://img.youtube.com/vi/{{ song.yt }}/hqdefault.jpg">
+                    <div class="play-circle">▶</div>
+                    <h4>{{ song.name }}</h4>
+                    <p>{{ song.artist }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <aside class="right-panel">
+        <div class="now-card">
+            <h3>Now Playing <span>💜</span></h3>
+            <img src="https://img.youtube.com/vi/{{ now_playing.yt }}/hqdefault.jpg">
+            <h4>{{ now_playing.name }}</h4>
+            <p>{{ now_playing.artist }}</p>
+
+            <div class="progress">
+                <div></div>
+            </div>
+
+            <div class="controls">
+                <span>⏮</span>
+                <button>Ⅱ</button>
+                <span>⏭</span>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Mood History</h3>
+            <canvas id="moodChart"></canvas>
+        </div>
+
+        <div class="quote-card">
+            “Music is the strongest form of <span>magic.</span>”
+        </div>
+    </aside>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById("moodChart");
+
+new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        datasets: [{
+            label: "Mood",
+            data: [2, 4, 3, 5, 4, 7, 6],
+            borderColor: "#ff4fd8",
+            backgroundColor: "rgba(255, 79, 216, 0.15)",
+            tension: 0.45,
+            fill: true,
+            pointRadius: 5,
+            pointBackgroundColor: "#ffcc00"
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: "#b9afd6" },
+                grid: { display: false }
+            },
+            y: {
+                ticks: { display: false },
+                grid: { display: false }
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
