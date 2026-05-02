@@ -30,7 +30,7 @@
         <div class="topbar">
             <div class="search-bar">
                 <span>⌕</span>
-                <input placeholder="Search for songs, artists, moods...">
+                <input id="songSearch" placeholder="Search for songs, artists, moods...">
             </div>
 
             <div class="user-box">
@@ -85,12 +85,26 @@
 
             <div class="song-grid">
                 {% for song in songs %}
-                <a href="https://www.youtube.com/watch?v={{ song.yt }}" target="_blank" class="song-card">
-                    <img src="https://img.youtube.com/vi/{{ song.yt }}/hqdefault.jpg">
-                    <div class="play-circle">▶</div>
+                <div class="song-card searchable-song"
+                     data-name="{{ song.name|lower }}"
+                     data-artist="{{ song.artist|lower }}"
+                     data-mood="{{ mood|lower }}">
+
+                    <img onclick="playSong('{{ song.yt }}', '{{ song.name }}', '{{ song.artist }}')" 
+                         src="https://img.youtube.com/vi/{{ song.yt }}/hqdefault.jpg">
+
+                    <button class="play-circle" onclick="playSong('{{ song.yt }}', '{{ song.name }}', '{{ song.artist }}')">▶</button>
+
+                    <form method="POST" action="/like">
+                        <input type="hidden" name="song" value="{{ song.name }}">
+                        <input type="hidden" name="artist" value="{{ song.artist }}">
+                        <input type="hidden" name="yt" value="{{ song.yt }}">
+                        <button class="like-btn" type="submit">♡</button>
+                    </form>
+
                     <h4>{{ song.name }}</h4>
                     <p>{{ song.artist }}</p>
-                </a>
+                </div>
                 {% endfor %}
             </div>
         </section>
@@ -99,9 +113,15 @@
     <aside class="right-panel">
         <div class="now-card">
             <h3>Now Playing <span>💜</span></h3>
-            <img src="https://img.youtube.com/vi/{{ now_playing.yt }}/hqdefault.jpg">
-            <h4>{{ now_playing.name }}</h4>
-            <p>{{ now_playing.artist }}</p>
+
+            <iframe id="nowVideo"
+                src="https://www.youtube.com/embed/{{ now_playing.yt }}"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+
+            <h4 id="nowTitle">{{ now_playing.name }}</h4>
+            <p id="nowArtist">{{ now_playing.artist }}</p>
 
             <div class="progress">
                 <div></div>
@@ -112,10 +132,14 @@
                 <button>Ⅱ</button>
                 <span>⏭</span>
             </div>
+
+            <a id="youtubeOpen" class="youtube-open" href="https://www.youtube.com/watch?v={{ now_playing.yt }}" target="_blank">
+                Open on YouTube
+            </a>
         </div>
 
         <div class="chart-card">
-            <h3>Mood History</h3>
+            <h3>Real Mood History</h3>
             <canvas id="moodChart"></canvas>
         </div>
 
@@ -129,15 +153,39 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+function playSong(yt, name, artist) {
+    document.getElementById("nowVideo").src = "https://www.youtube.com/embed/" + yt + "?autoplay=1";
+    document.getElementById("nowTitle").innerText = name;
+    document.getElementById("nowArtist").innerText = artist;
+    document.getElementById("youtubeOpen").href = "https://www.youtube.com/watch?v=" + yt;
+}
+
+document.getElementById("songSearch").addEventListener("keyup", function () {
+    let searchValue = this.value.toLowerCase();
+    let songs = document.querySelectorAll(".searchable-song");
+
+    songs.forEach(song => {
+        let name = song.dataset.name;
+        let artist = song.dataset.artist;
+        let mood = song.dataset.mood;
+
+        if (name.includes(searchValue) || artist.includes(searchValue) || mood.includes(searchValue)) {
+            song.style.display = "block";
+        } else {
+            song.style.display = "none";
+        }
+    });
+});
+
 const ctx = document.getElementById("moodChart");
 
 new Chart(ctx, {
     type: "line",
     data: {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        labels: {{ chart_labels|tojson }},
         datasets: [{
-            label: "Mood",
-            data: [2, 4, 3, 5, 4, 7, 6],
+            label: "Mood Count",
+            data: {{ chart_values|tojson }},
             borderColor: "#ff4fd8",
             backgroundColor: "rgba(255, 79, 216, 0.15)",
             tension: 0.45,
@@ -158,7 +206,8 @@ new Chart(ctx, {
                 grid: { display: false }
             },
             y: {
-                ticks: { display: false },
+                beginAtZero: true,
+                ticks: { color: "#b9afd6", stepSize: 1 },
                 grid: { display: false }
             }
         }

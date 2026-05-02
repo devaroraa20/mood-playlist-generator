@@ -14,6 +14,7 @@ client = Cloudant(cloudant_username, cloudant_password, url=cloudant_url, connec
 
 user_db = client["users"] if "users" in client.all_dbs() else client.create_database("users")
 playlist_db = client["mood_playlist"] if "mood_playlist" in client.all_dbs() else client.create_database("mood_playlist")
+liked_db = client["liked_songs"] if "liked_songs" in client.all_dbs() else client.create_database("liked_songs")
 
 playlists = {
     "happy": [
@@ -59,6 +60,15 @@ playlists = {
         {"name": "Die For You", "artist": "The Weeknd", "yt": "uPD0QOGTmMI"}
     ]
 }
+
+def get_mood_chart(user):
+    mood_count = {"happy": 0, "chill": 0, "sad": 0, "energetic": 0, "focus": 0, "romantic": 0}
+
+    for doc in playlist_db:
+        if doc.get("user") == user and doc.get("mood") in mood_count:
+            mood_count[doc.get("mood")] += 1
+
+    return list(mood_count.keys()), list(mood_count.values())
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -120,14 +130,32 @@ def dashboard():
         })
 
     now_playing = songs[0]
+    chart_labels, chart_values = get_mood_chart(session["user"])
 
     return render_template(
         "index.html",
         mood=mood,
         songs=songs,
         now_playing=now_playing,
-        user=session["user"]
+        user=session["user"],
+        chart_labels=chart_labels,
+        chart_values=chart_values
     )
+
+@app.route("/like", methods=["POST"])
+def like_song():
+    if "user" not in session:
+        return redirect("/")
+
+    liked_db.create_document({
+        "user": session["user"],
+        "song": request.form["song"],
+        "artist": request.form["artist"],
+        "youtube_id": request.form["yt"],
+        "created_at": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    })
+
+    return redirect("/dashboard")
 
 @app.route("/history")
 def history():
